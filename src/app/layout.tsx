@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Spline_Sans } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const splineSans = Spline_Sans({
@@ -31,6 +32,7 @@ export default function RootLayout({
         style={{ minHeight: 'max(884px, 100dvh)' }}
       >
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
