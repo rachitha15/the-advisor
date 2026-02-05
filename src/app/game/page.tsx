@@ -44,7 +44,7 @@ export default function GamePage() {
   const [currentAgent, setCurrentAgent] = useState<AgentType>('baby');
   const [progress, setProgress] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoading] = useState(false);
 
   // Current scenario stats (resets each scenario to that scenario's startingStats)
   const [currentStats, setCurrentStats] = useState<GameStats>({
