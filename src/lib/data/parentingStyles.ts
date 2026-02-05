@@ -63,7 +63,6 @@ export function determineParentingStyle(agentTrust: {
 
   const sorted = trustLevels.sort((a, b) => b.trust - a.trust);
   const highest = sorted[0];
-  const secondHighest = sorted[1];
 
   // If all agents are balanced (no agent > 60, all within 20 points)
   const maxTrust = highest.trust;

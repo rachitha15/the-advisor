@@ -61,7 +61,7 @@ Try it: advisor.rachitasuresh.com`;
             </h1>
 
             <p className="text-lg text-gray-400 text-center italic">
-              "{parentingStyle.tagline}"
+              &quot;{parentingStyle.tagline}&quot;
             </p>
 
             <div className="bg-white/5 rounded-2xl p-6 border border-white/5 mt-2">
@@ -133,7 +133,7 @@ Try it: advisor.rachitasuresh.com`;
           {/* Footer Message */}
           <div className="bg-white/5 rounded-xl p-5 border border-white/5 mt-4">
             <p className="text-center text-sm text-gray-400 leading-relaxed">
-              Parenting is the most human experience - and it's also the perfect lens
+              Parenting is the most human experience - and it&apos;s also the perfect lens
               for understanding how AI systems make decisions with competing objectives.
             </p>
           </div>

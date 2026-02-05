@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { AgentType } from '@/lib/types/game';
 import { BehindTheScenesContent, getBehindTheScenes } from '@/lib/data/behindTheScenes';
 
@@ -45,8 +44,6 @@ export default function OutcomeScreen({
   scenarioNumber,
   onContinue,
 }: OutcomeScreenProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   // Get Behind The Scenes content for this scenario
   const behindTheScenesContent = getBehindTheScenes(scenarioNumber);
   const showBehindTheScenes = behindTheScenesContent !== null;
@@ -211,7 +208,7 @@ export default function OutcomeScreen({
                           {trustLevel}
                         </span>
                       </div>
-                      <p className="text-xs text-gray-400 mb-2 italic">"{reaction.reaction}"</p>
+                      <p className="text-xs text-gray-400 mb-2 italic">&quot;{reaction.reaction}&quot;</p>
                     </div>
                   </div>
                 );
