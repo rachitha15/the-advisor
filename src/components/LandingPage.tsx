@@ -140,7 +140,7 @@ export default function LandingPage({ onBegin, onSkip }: LandingPageProps) {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto"
             variants={containerVariants}
           >
-            {agents.map((agent, index) => (
+            {agents.map((agent) => (
               <motion.div
                 key={agent.type}
                 variants={agentCardVariants}

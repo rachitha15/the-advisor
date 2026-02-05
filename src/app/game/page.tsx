@@ -61,8 +61,6 @@ export default function GamePage() {
     work: 50,
   });
 
-  const [choiceHistory, setChoiceHistory] = useState<string[]>([]);
-
   const currentScenario = scenarios[currentScenarioIndex];
   const isLastScenario = currentScenarioIndex === scenarios.length - 1;
 
@@ -223,9 +221,6 @@ export default function GamePage() {
           Math.min(100, currentScenario.startingStats.sanity + choice.statChanges.sanity)
         ),
       });
-
-      // Record choice in history
-      setChoiceHistory((prev) => [...prev, `${currentScenario.id}-${choiceId}`]);
     }
 
     setCurrentScreen('outcome');

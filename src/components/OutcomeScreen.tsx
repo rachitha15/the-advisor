@@ -1,7 +1,7 @@
 'use client';
 
 import { AgentType } from '@/lib/types/game';
-import { BehindTheScenesContent, getBehindTheScenes } from '@/lib/data/behindTheScenes';
+import { getBehindTheScenes } from '@/lib/data/behindTheScenes';
 
 interface StatChange {
   energy?: number;

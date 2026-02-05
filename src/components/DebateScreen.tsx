@@ -27,7 +27,6 @@ export default function DebateScreen({
   choices,
   onChoiceSelect,
   currentStats,
-  scenarioId = 1,
 }: DebateScreenProps) {
   // Agent configuration for styling and icons
   const agentConfig: Record<
@@ -221,7 +220,7 @@ export default function DebateScreen({
         {/* Bottom Action Deck - Choice Buttons */}
         <div className="fixed md:absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-dark via-background-dark to-transparent pt-12 z-30">
           <div className="flex flex-col gap-3">
-            {choices.map((choice, index) => {
+            {choices.map((choice) => {
               const isPrimary = choice.id === primaryChoiceId;
               const icon = choiceIcons[choice.id] || 'psychology';
 
