@@ -290,18 +290,6 @@ export default function GamePage() {
 
   return (
     <div className="min-h-screen bg-background-dark">
-      {/* Debug Info */}
-      <div className="fixed top-4 right-4 z-50 bg-black/80 backdrop-blur-md p-4 rounded-xl text-white text-xs max-w-xs">
-        <p className="font-bold mb-2">🎮 Game Mode</p>
-        <p>Scenario: {currentScenarioIndex + 1}/5</p>
-        <p>Screen: {currentScreen}</p>
-        <p>Progress: {progress}%</p>
-        <p className="mt-2 pt-2 border-t border-white/10">
-          Energy: {currentStats.energy} | Bond: {currentStats.bond} | Sanity: {currentStats.sanity}
-        </p>
-        {isLoading && <p className="text-primary mt-2">⏳ Loading...</p>}
-      </div>
-
       {/* Render Current Screen */}
       {currentScreen === 'scenario' && (
         <ScenarioScreen scenario={currentScenario} onConsultAdvisors={handleConsultAdvisors} />
