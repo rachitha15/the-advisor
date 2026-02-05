@@ -10,6 +10,7 @@ import {
 } from '@/components';
 import { scenarios } from '@/lib/data/scenarios';
 import { AgentType } from '@/lib/types/game';
+import { parentingStyles } from '@/lib/data/parentingStyles';
 
 type ScreenType = 'scenario' | 'waiting' | 'debate' | 'outcome' | 'results';
 
@@ -148,57 +149,7 @@ export default function TestAllScreensPage() {
       )}
 
       {currentScreen === 'results' && (
-        <ResultsScreen
-          profileName="THE RATIONAL OPTIMIZER"
-          profileDescription="You prioritize logical stability over emotional volatility, mimicking a classical Greedy Algorithm."
-          agentTrust={{
-            baby: 45,
-            survival: 75,
-            rational: 85,
-            chaos: 25,
-          }}
-          aiTerms={[
-            {
-              title: 'Greedy Algorithm',
-              description: 'You optimized for the best immediate outcome at each decision step.',
-            },
-            {
-              title: 'Low Entropy',
-              description:
-                'Your choices actively minimized unpredictability in the system environment.',
-            },
-            {
-              title: 'Exploitation vs Exploration',
-              description:
-                'Sticking to known safe paths (Exploitation) rather than testing new behaviors.',
-            },
-          ]}
-          learnings={[
-            {
-              title: 'Scenario 1: The First Night',
-              description: 'Learned about sleep deprivation and self-care',
-            },
-            {
-              title: 'Scenario 2: Feeding Struggles',
-              description: 'Explored feeding schedules vs demand feeding',
-            },
-            {
-              title: 'Scenario 3: The Tantrum',
-              description: 'Practiced emotional regulation techniques',
-            },
-            {
-              title: 'Scenario 4: Sleep Regression',
-              description: 'Discovered adaptive parenting strategies',
-            },
-            {
-              title: 'Scenario 5: The Milestone',
-              description: 'Celebrated growth and development',
-            },
-          ]}
-          onShare={() => console.log('Share clicked')}
-          onPlayAgain={() => console.log('Play Again clicked')}
-          onReadBlog={() => console.log('Read Blog clicked')}
-        />
+        <ResultsScreen parentingStyle={parentingStyles.researchDriven} />
       )}
     </div>
   );
