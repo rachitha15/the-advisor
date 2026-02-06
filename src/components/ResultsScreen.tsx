@@ -15,7 +15,7 @@ My parenting style: ${parentingStyle.name}
 
 Turns out parenting decisions are multi-agent AI systems in disguise.
 
-Try it: advisor.rachitasuresh.com`;
+Try it: advisor.rachithasuresh.com`;
 
     const encodedText = encodeURIComponent(shareText);
 
