@@ -129,31 +129,60 @@ export default function OutcomeScreen({
               const config = getStatConfig(stat);
               const newValue = newStats[stat as keyof typeof newStats];
               const isPositive = change > 0;
+              const isNeutral = change === 0;
 
               return (
                 <div
                   key={stat}
-                  className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[#1c3a25] p-3 text-center shadow-lg border border-white/5"
+                  className="relative flex flex-col items-center justify-center gap-2 rounded-xl bg-[#1c3a25] p-4 text-center shadow-lg border border-white/5"
                 >
-                  <div className="mb-1 rounded-full bg-white/10 p-2">
+                  {/* Floating Change Badge */}
+                  {!isNeutral && (
+                    <div
+                      className={`absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full font-bold text-sm shadow-lg ${
+                        isPositive
+                          ? 'bg-primary text-black'
+                          : 'bg-red-500 text-white'
+                      }`}
+                    >
+                      <span className="inline-flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[16px]">
+                          {isPositive ? 'arrow_upward' : 'arrow_downward'}
+                        </span>
+                        {isPositive ? '+' : ''}
+                        {change}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Icon */}
+                  <div className="mt-1 rounded-full bg-white/10 p-2">
                     <span className={`material-symbols-outlined ${config.color} text-[20px]`}>
                       {config.icon}
                     </span>
                   </div>
+
+                  {/* Stat Name */}
                   <p className="text-xs font-medium text-gray-300 uppercase tracking-wide capitalize">
                     {stat}
                   </p>
-                  <p className="text-xl font-bold text-white">{newValue}/100</p>
-                  <span
-                    className={`inline-flex items-center text-xs font-bold ${
-                      isPositive ? 'text-primary' : 'text-red-500'
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-[12px] mr-0.5">
-                      {isPositive ? 'arrow_upward' : 'arrow_downward'}
-                    </span>
-                    {Math.abs(change)}
-                  </span>
+
+                  {/* Final Value - Larger */}
+                  <p className="text-2xl font-bold text-white">{newValue}/100</p>
+
+                  {/* Progress Bar */}
+                  <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full ${
+                        isPositive
+                          ? 'bg-primary'
+                          : isNeutral
+                          ? 'bg-gray-500'
+                          : 'bg-red-500'
+                      } transition-all duration-500`}
+                      style={{ width: `${newValue}%` }}
+                    ></div>
+                  </div>
                 </div>
               );
             })}
@@ -226,151 +255,25 @@ export default function OutcomeScreen({
               {/* Content */}
               <div className="relative z-10 flex flex-col p-6 gap-4">
                 <div>
-                  <h3 className="text-2xl font-bold text-white leading-tight mb-4">
-                    🔍 {behindTheScenesContent.title}
+                  <h3 className="text-xl font-bold text-white leading-tight mb-4 flex items-center gap-2">
+                    <span className="text-2xl">💡</span>
+                    {behindTheScenesContent.title}
                   </h3>
-                  <div className="space-y-2">
+                  <div className="space-y-4">
                     {behindTheScenesContent.points.map((point, index) => {
-                      // Parse and render points with agent icons
-                      const renderPoint = () => {
-                        // Empty strings for spacing (no bullet)
-                        if (point === '') {
-                          return <span className="block h-1"></span>;
-                        }
+                      // Empty strings for spacing
+                      if (point === '') {
+                        return <div key={index} className="h-2"></div>;
+                      }
 
-                        // Check for [CHECK] marker
-                        if (point.startsWith('[CHECK]')) {
-                          const text = point.replace('[CHECK]', '').trim();
-                          return (
-                            <div className="flex items-start gap-2">
-                              <span className="text-primary shrink-0 text-lg">✓</span>
-                              <span className="font-semibold">{text}</span>
-                            </div>
-                          );
-                        }
-
-                        // Check for single agent marker at START [AGENT] text
-                        const singleAgentMatch = point.match(/^\[(\w+)\]\s*(.+)$/);
-                        if (singleAgentMatch) {
-                          const agentName = singleAgentMatch[1].toLowerCase() as AgentType;
-                          const text = singleAgentMatch[2];
-                          const config = agentConfig[agentName];
-
-                          if (config) {
-                            return (
-                              <div className="flex items-start gap-2">
-                                <div
-                                  className={`w-6 h-6 rounded-full ${config.bgColor} flex items-center justify-center border shrink-0`}
-                                >
-                                  <span className={`material-symbols-outlined ${config.color} text-xs`}>
-                                    {config.icon}
-                                  </span>
-                                </div>
-                                <span className="font-semibold">{text}</span>
-                              </div>
-                            );
-                          }
-                        }
-
-                        // Check for agent interaction [AGENT1][AGENT2] text
-                        const interactionMatch = point.match(/^\[(\w+)\]\[(\w+)\]\s*(.+)$/);
-                        if (interactionMatch) {
-                          const agent1 = interactionMatch[1].toLowerCase() as AgentType;
-                          const agent2 = interactionMatch[2].toLowerCase() as AgentType;
-                          const text = interactionMatch[3];
-                          const config1 = agentConfig[agent1];
-                          const config2 = agentConfig[agent2];
-
-                          if (config1 && config2) {
-                            return (
-                              <div className="flex items-center gap-2">
-                                <div
-                                  className={`w-5 h-5 rounded-full ${config1.bgColor} flex items-center justify-center border shrink-0`}
-                                >
-                                  <span
-                                    className={`material-symbols-outlined ${config1.color}`}
-                                    style={{ fontSize: 12 }}
-                                  >
-                                    {config1.icon}
-                                  </span>
-                                </div>
-                                <span className="text-primary">→</span>
-                                <div
-                                  className={`w-5 h-5 rounded-full ${config2.bgColor} flex items-center justify-center border shrink-0`}
-                                >
-                                  <span
-                                    className={`material-symbols-outlined ${config2.color}`}
-                                    style={{ fontSize: 12 }}
-                                  >
-                                    {config2.icon}
-                                  </span>
-                                </div>
-                                <span className="text-sm">{text}</span>
-                              </div>
-                            );
-                          }
-                        }
-
-                        // Check for INLINE agent markers like "text [WORK] more text"
-                        const inlineAgentMatch = point.match(/\[(\w+)\]/);
-                        if (inlineAgentMatch) {
-                          const agentName = inlineAgentMatch[1].toLowerCase() as AgentType;
-                          const config = agentConfig[agentName];
-
-                          if (config) {
-                            // Split text by [AGENT] marker and render with icon
-                            const parts = point.split(/\[(\w+)\]/);
-                            return (
-                              <div className="flex items-start gap-3">
-                                <span className="text-primary mt-1.5 shrink-0">•</span>
-                                <span className="flex items-center gap-2 flex-wrap">
-                                  {parts.map((part, i) => {
-                                    // Check if this part is an agent name
-                                    const partAgent = part.toLowerCase() as AgentType;
-                                    const partConfig = agentConfig[partAgent];
-
-                                    if (partConfig && i % 2 === 1) {
-                                      // This is an agent marker
-                                      return (
-                                        <div
-                                          key={i}
-                                          className={`inline-flex w-6 h-6 rounded-full ${partConfig.bgColor} items-center justify-center border shrink-0`}
-                                        >
-                                          <span
-                                            className={`material-symbols-outlined ${partConfig.color} text-xs`}
-                                          >
-                                            {partConfig.icon}
-                                          </span>
-                                        </div>
-                                      );
-                                    } else if (part) {
-                                      // Regular text
-                                      return <span key={i}>{part}</span>;
-                                    }
-                                    return null;
-                                  })}
-                                </span>
-                              </div>
-                            );
-                          }
-                        }
-
-                        // Regular point with bullet
-                        return (
-                          <div className="flex items-start gap-3">
-                            <span className="text-primary mt-1.5 shrink-0">•</span>
-                            <span>{point}</span>
-                          </div>
-                        );
-                      };
-
+                      // Regular paragraph - clean and readable
                       return (
-                        <div
+                        <p
                           key={index}
-                          className="text-gray-200 text-sm font-medium leading-relaxed"
+                          className="text-gray-200 text-base leading-relaxed"
                         >
-                          {renderPoint()}
-                        </div>
+                          {point}
+                        </p>
                       );
                     })}
                   </div>
